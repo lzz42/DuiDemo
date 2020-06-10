@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\demangle.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\logging.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\raw_logging.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\symbolize.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\utilities.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\vlog_is_on.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\signalhandler.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\windows\port.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\Win_Build\glog\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\Win_Build\glog\raw_logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\Win_Build\glog\stl_logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\Win_Build\glog\vlog_is_on.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\glog\log_severity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\base\commandlineflags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\base\googleinit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\base\mutex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\demangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\symbolize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\src\windows\port.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\xap\IIHSetup\IIHSetupDev\log\glog-0.4.0\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{338FF188-7C79-373E-A39A-E90E4BFDB177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{88C8FFFD-17D2-33CB-ADA7-E5E0EFBFD4C0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
