@@ -37,11 +37,14 @@ DuiDemo/x86/
 log/Debug/
 x64/
 x86/
+[Bb]in
 
 # VS Solution/Project Temporary File
+*.user
 .vs
 .vs/DuiDemo/v16/.suo
 .vs/DuiDemo/v16/Solution.VC.db
 .vs/DuiDemo/v16/Solution.VC.db-shm
 .vs/DuiDemo/v16/Browse.VC.db
 .vs/DuiDemo/v16/ipch/f184ed7f05f16de8.ipch
+.vs/DuiDemo/v16/.suo
