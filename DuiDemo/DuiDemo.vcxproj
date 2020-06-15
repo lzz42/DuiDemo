@@ -191,6 +191,7 @@
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="DuiDemo.h" />
     <ClInclude Include="DuiDemoDoc.h" />
     <ClInclude Include="DuiDemoView.h" />
@@ -207,6 +208,7 @@
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="common.cpp" />
     <ClCompile Include="DuiDemo.cpp" />
     <ClCompile Include="DuiDemoDoc.cpp" />
     <ClCompile Include="DuiDemoView.cpp" />

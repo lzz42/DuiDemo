@@ -18,6 +18,8 @@ void printf_cmd()
 
 int main(int argc, char* argv[], char** env)
 {
+	printf("EXE:: %s \n", _pgmptr);
+	printf("PATH:: %s \n", _pgmptr);
 	printf("lz4 num:\t%d\n", LZ4_versionNumber());
 	printf("lz4 str:\t%s\n", LZ4_versionString());
 	if (argc == 0 || argv == NULL)
@@ -38,8 +40,10 @@ int main(int argc, char* argv[], char** env)
 			j++;
 		}*/
 	}
-	char* infile = "D:\\WIFI2.txt";
-	zip_file(infile, NULL);
+	/*char* infile = "D:\\WIFI2.txt";
+	zip_file(infile, NULL);*/
+	char chs[100];
+	gets_s(chs);
 	return 0;
 }
 
