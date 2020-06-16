@@ -92,10 +92,10 @@
     <ClCompile Include="PropertiesWnd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="common.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="common.cpp">
+    <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

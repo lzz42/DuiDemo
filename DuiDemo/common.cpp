@@ -1,11 +1,8 @@
-//#include "stdafx.h"
-#include <direct.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <stringapiset.h>
-#include <vector>
-#include <map>
+
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NON_CONFORMING_SWPRINTFS
+
+#include "pch.h"
 #include "common.h"
 
 using std::vector;
@@ -13,12 +10,27 @@ using std::map;
 
 #pragma region env info
 
+void debug_info(const char* msg) {
+	WCHAR wsz[256];
+	swprintf(wsz, L"%S", msg);
+	OutputDebugString(L"*****************************");
+	OutputDebugString(wsz);
+	OutputDebugString(L"*****************************");
+	free(wsz);
+}
+
 /// <summary>
 /// 获取当前进程执行文件的全路径
 /// </summary>
 /// <returns></returns>
 char* get_app_path() {
+#ifdef PCH_H
+	char* path = (char*)malloc(sizeof(char) * MAX_PATH);
+	_get_pgmptr(&path);
+	return path;
+#else
 	return _pgmptr;
+#endif
 }
 
 /// <summary>
@@ -28,11 +40,9 @@ char* get_app_path() {
 char* get_app_dir() {
 	char buf1[256];
 	_getcwd(buf1, sizeof(buf1));
-	WCHAR wsz[256];
-	swprintf(wsz, L"%S", buf1);
-	OutputDebugString(L"*****************************");
-	OutputDebugString(wsz);
-	OutputDebugString(L"*****************************");
+
+	debug_info(buf1);
+
 	return buf1;
 }
 
@@ -188,12 +198,7 @@ char* unicode_to_utf8(TCHAR* pchars) {
 	char* pchar = new char[num];
 	WideCharToMultiByte(CP_UTF8, NULL, pchars, -1, pchar, num, NULL, FALSE);
 
-
-	WCHAR wsz2[256];
-	swprintf(wsz2, L"%S", pchar);
-	OutputDebugString(L"UTF8 *****************************");
-	OutputDebugString(wsz2);
-	OutputDebugString(L"UTF8 *****************************");
+	debug_info(pchar);
 
 	return pchar;
 }
@@ -203,11 +208,7 @@ char* unicode_to_gb2312(TCHAR* pchars) {
 	char* pchar = new char[n];
 	WideCharToMultiByte(CP_THREAD_ACP, 0, pchars, -1, pchar, n, 0, 0);
 
-	WCHAR wsz2[256];
-	swprintf(wsz2, L"%S", pchar);
-	OutputDebugString(L"GB2312 *****************************");
-	OutputDebugString(wsz2);
-	OutputDebugString(L"GB2312 *****************************");
+	debug_info(pchar);
 
 	return pchar;
 }
@@ -219,17 +220,12 @@ char* unicode_to_ascii(TCHAR* pchars) {
 	//MultiByteToWideChar(CP_UTF8, 0, pchars, -1, strUnicode, nwLen);//ASCII转UNICODE
 
 	int nLen = WideCharToMultiByte(CP_ACP, 0, pchars, -1, NULL, 0, "", false);//算出合适的长度
-	char* strAscii = new char[nLen];
-	WideCharToMultiByte(CP_ACP, 0, pchars, -1, strAscii, nLen, "", false);//UNICODE转ASCII
+	char* pchar = new char[nLen];
+	WideCharToMultiByte(CP_ACP, 0, pchars, -1, pchar, nLen, "", false);//UNICODE转ASCII
 
+	debug_info(pchar);
 
-	WCHAR wsz2[256];
-	swprintf(wsz2, L"%S", strAscii);
-	OutputDebugString(L"ASCII *****************************");
-	OutputDebugString(wsz2);
-	OutputDebugString(L"ASCII *****************************");
-
-	return strAscii;
+	return pchar;
 }
 
 /// <summary>
@@ -243,16 +239,12 @@ char* unicode_to_Ansii(const wchar_t* szStr) {
 	{
 		return NULL;
 	}
-	char* pResult = new char[nLen];
-	WideCharToMultiByte(CP_ACP, 0, szStr, -1, pResult, nLen, NULL, NULL);
+	char* pchar = new char[nLen];
+	WideCharToMultiByte(CP_ACP, 0, szStr, -1, pchar, nLen, NULL, NULL);
 
-	WCHAR wsz2[256];
-	swprintf(wsz2, L"%S", pResult);
-	OutputDebugString(L"ASCII2 *****************************");
-	OutputDebugString(wsz2);
-	OutputDebugString(L"ASCII2 *****************************");
+	debug_info(pchar);
 
-	return pResult;
+	return pchar;
 }
 
 /// <summary>

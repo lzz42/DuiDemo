@@ -1,12 +1,22 @@
 #pragma once
 
+#ifdef PCH_H
+#include "pch.h"
+#else
+#include "stafx.h"
+#endif
+
 #include <direct.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <atlstr.h>
 #include <stringapiset.h>
 #include <vector>
 #include <map>
+
+using std::vector;
+using std::map;
 
 char* get_app_path();
 
