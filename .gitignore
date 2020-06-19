@@ -34,9 +34,7 @@
 DuiDemo/x64/
 DuiDemo/x86/
 log/Debug/
-x64/
-x86/
-[Bb]in
+[Bb]in/
 
 # VS Solution/Project Temporary File
 *.user
