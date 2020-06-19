@@ -1,0 +1,64 @@
+[2020-06-19 17:14:21 305127] [PID 33496] [TID 29108] [info] Init logger
+[2020-06-19 17:14:21 305214] [PID 33496] [TID 29108] [critical] ----------
+[2020-06-19 17:14:21 305354] [PID 33496] [TID 29108] [warning] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:14:21 305400] [PID 33496] [TID 29108] [critical] ----------
+[2020-06-19 17:14:21 305465] [PID 33496] [TID 29108] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:14:21 305499] [PID 33496] [TID 29108] [critical] ----------
+[2020-06-19 17:14:21 305571] [PID 33496] [TID 29108] [error] 10902
+[2020-06-19 17:14:21 305628] [PID 33496] [TID 29108] [critical] ----------
+[2020-06-19 17:14:21 305695] [PID 33496] [TID 29108] [critical] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:14:21 306324] [PID 33496] [TID 29108] [critical] ----------
+[2020-06-19 17:14:21 306430] [PID 33496] [TID 29108] [error] Before Reverse Len:9 half 4
+[2020-06-19 17:14:21 306494] [PID 33496] [TID 29108] [error] exe.c4zl
+[2020-06-19 17:14:21 306569] [PID 33496] [TID 29108] [error] After Reverse
+[2020-06-19 17:14:21 306624] [PID 33496] [TID 29108] [error] lz4c.exe
+[2020-06-19 17:14:21 306669] [PID 33496] [TID 29108] [critical] lz4c.exe
+[2020-06-19 17:14:27 745243] [PID 33496] [TID 29108] [critical] hello my world!
+[2020-06-19 17:16:04 074601] [PID 1916] [TID 21048] [info] Init logger
+[2020-06-19 17:16:04 074715] [PID 1916] [TID 21048] [critical] ----------
+[2020-06-19 17:16:04 074874] [PID 1916] [TID 21048] [warning] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:16:04 074989] [PID 1916] [TID 21048] [critical] ----------
+[2020-06-19 17:16:04 075140] [PID 1916] [TID 21048] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:16:04 075265] [PID 1916] [TID 21048] [critical] ----------
+[2020-06-19 17:16:04 075609] [PID 1916] [TID 21048] [error] 10902
+[2020-06-19 17:16:04 075756] [PID 1916] [TID 21048] [critical] ----------
+[2020-06-19 17:16:04 075804] [PID 1916] [TID 21048] [critical] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:16:04 075843] [PID 1916] [TID 21048] [critical] ----------
+[2020-06-19 17:16:04 075926] [PID 1916] [TID 21048] [error] Before Reverse Len:9 half 4
+[2020-06-19 17:16:04 075978] [PID 1916] [TID 21048] [error] exe.c4zl
+[2020-06-19 17:16:04 076024] [PID 1916] [TID 21048] [error] After Reverse
+[2020-06-19 17:16:04 076072] [PID 1916] [TID 21048] [error] lz4c.exe
+[2020-06-19 17:16:04 076121] [PID 1916] [TID 21048] [critical] lz4c.exe
+[2020-06-19 17:16:04 076177] [PID 1916] [TID 21048] [critical] hello my world!
+[2020-06-19 17:23:44 871064] [PID 7708] [TID 30976] [info] Init logger
+[2020-06-19 17:23:44 871175] [PID 7708] [TID 30976] [critical] ----------
+[2020-06-19 17:23:44 871322] [PID 7708] [TID 30976] [warning] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:23:44 871378] [PID 7708] [TID 30976] [critical] ----------
+[2020-06-19 17:23:44 871448] [PID 7708] [TID 30976] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:23:44 871494] [PID 7708] [TID 30976] [critical] ----------
+[2020-06-19 17:23:44 871617] [PID 7708] [TID 30976] [error] 10902
+[2020-06-19 17:23:44 871692] [PID 7708] [TID 30976] [critical] ----------
+[2020-06-19 17:23:44 871751] [PID 7708] [TID 30976] [critical] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:23:44 871815] [PID 7708] [TID 30976] [critical] ----------
+[2020-06-19 17:23:44 871901] [PID 7708] [TID 30976] [error] Before Reverse Len:9 half 4
+[2020-06-19 17:23:44 871966] [PID 7708] [TID 30976] [error] exe.c4zl
+[2020-06-19 17:23:44 872029] [PID 7708] [TID 30976] [error] After Reverse
+[2020-06-19 17:23:44 872091] [PID 7708] [TID 30976] [error] lz4c.exe
+[2020-06-19 17:23:44 872149] [PID 7708] [TID 30976] [critical] lz4c.exe
+[2020-06-19 17:23:44 872220] [PID 7708] [TID 30976] [critical] hello my world!
+[2020-06-19 17:30:14 805021] [PID 31304] [TID 15020] [info] Init logger
+[2020-06-19 17:30:14 805117] [PID 31304] [TID 15020] [critical] ----------
+[2020-06-19 17:30:14 805281] [PID 31304] [TID 15020] [warning] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:30:14 805325] [PID 31304] [TID 15020] [critical] ----------
+[2020-06-19 17:30:14 805381] [PID 31304] [TID 15020] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:30:14 805428] [PID 31304] [TID 15020] [critical] ----------
+[2020-06-19 17:30:14 805525] [PID 31304] [TID 15020] [error] 10902
+[2020-06-19 17:30:14 805596] [PID 31304] [TID 15020] [critical] ----------
+[2020-06-19 17:30:14 805653] [PID 31304] [TID 15020] [critical] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 17:30:14 805711] [PID 31304] [TID 15020] [critical] ----------
+[2020-06-19 17:30:14 805790] [PID 31304] [TID 15020] [error] Before Reverse Len:9 half 4
+[2020-06-19 17:30:14 805852] [PID 31304] [TID 15020] [error] exe.c4zl
+[2020-06-19 17:30:14 805915] [PID 31304] [TID 15020] [error] After Reverse
+[2020-06-19 17:30:14 805976] [PID 31304] [TID 15020] [error] lz4c.exe
+[2020-06-19 17:30:14 806032] [PID 31304] [TID 15020] [critical] lz4c.exe
+[2020-06-19 17:30:14 806094] [PID 31304] [TID 15020] [critical] hello my world!

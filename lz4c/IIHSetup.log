@@ -1,0 +1,20 @@
+[2020-06-19 16:44:02 651679] [PID 31044] [TID 28384] [info] Init logger
+[2020-06-19 16:44:05 091442] [PID 31044] [TID 28384] [critical] ----------
+[2020-06-19 16:44:05 091605] [PID 31044] [TID 28384] [warning] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 16:44:05 091646] [PID 31044] [TID 28384] [critical] ----------
+[2020-06-19 16:44:05 091710] [PID 31044] [TID 28384] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 16:44:05 091824] [PID 31044] [TID 28384] [critical] ----------
+[2020-06-19 16:44:05 092000] [PID 31044] [TID 28384] [error] 10902
+[2020-06-19 16:44:05 092084] [PID 31044] [TID 28384] [critical] ----------
+[2020-06-19 16:44:05 092153] [PID 31044] [TID 28384] [critical] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 16:44:05 092731] [PID 31044] [TID 28384] [critical] ----------
+[2020-06-19 16:46:31 086927] [PID 32560] [TID 30816] [info] Init logger
+[2020-06-19 16:46:31 098309] [PID 32560] [TID 30816] [critical] ----------
+[2020-06-19 16:46:31 098454] [PID 32560] [TID 30816] [warning] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 16:46:31 100830] [PID 32560] [TID 30816] [critical] ----------
+[2020-06-19 16:46:31 100919] [PID 32560] [TID 30816] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 16:46:31 100954] [PID 32560] [TID 30816] [critical] ----------
+[2020-06-19 16:46:31 101102] [PID 32560] [TID 30816] [error] 10902
+[2020-06-19 16:46:31 101157] [PID 32560] [TID 30816] [critical] ----------
+[2020-06-19 16:46:31 101205] [PID 32560] [TID 30816] [critical] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-19 16:46:31 101256] [PID 32560] [TID 30816] [critical] ----------

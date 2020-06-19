@@ -6,9 +6,51 @@
 #include <string>
 #include "lz4.h"
 
+//spdlog
+#include <cstdio>
+#include "spdlog/spdlog.h"
+#include "spdlog/cfg/env.h"
+#include "spdlog/fmt/ostr.h"
+
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/sinks/rotating_file_sink.h"
+#include "spdlog/sinks/daily_file_sink.h"
+#include "spdlog/async.h"
+
+#include "spdlog/fmt/bin_to_hex.h"
+namespace spd = spdlog;
 using namespace std;
 
 bool zip_file(char* infile, char* outfile);
+char* get_app_name();
+
+#define SPD_INFO spdlog::info
+#define SPD_TRACE spdlog::trace
+#define SPD_WARN spdlog::warn
+#define SPD_ERROR spdlog::error
+#define SPD_CRITICAL spdlog::critical
+void init_log() {
+	spdlog::cfg::load_env_levels();
+	spdlog::set_level(spdlog::level::info);
+	spdlog::flush_every(std::chrono::seconds(3));
+	spdlog::set_pattern("[%Y-%m-%d %H:%M:%S %f] [PID %P] [TID %t] [%^%l%$] %v");
+	spdlog::enable_backtrace(50);
+
+	char* app = get_app_name();
+	strcat(app, ".log");
+	auto basic_logger = spdlog::basic_logger_mt("basic_logger", app);
+	basic_logger->flush_on(spdlog::level::err);
+	spdlog::set_default_logger(basic_logger);
+
+	SPD_INFO("Init logger");
+}
+
+void shutdown_log() {
+	SPD_INFO("Shutdown logger");
+	spdlog::apply_all([&](std::shared_ptr<spdlog::logger> l) { l->info("log shout down."); });
+	spdlog::shutdown();
+}
 
 void printf_cmd()
 {
@@ -16,8 +58,73 @@ void printf_cmd()
 	printf("\t -c [code] \t :指定压缩编码格式（默认utf-8）支持：utf-8、unicode、gbk、gb2312\n");
 }
 
+char* get_app_name() {
+	char* name = _pgmptr;
+	int len = strlen(name);
+	char* ret = new char[len];
+	int k = 0;
+	for (int j = len - 1; j > 0; j--)
+	{
+		if (name[j] == '\\') {
+			ret[len - j - 1] = '\0';
+			k++;
+			break;
+		}
+		else if (name[j] == '\0') {
+			continue;
+		}
+		else {
+			ret[len - j - 1] = name[j];
+			k++;
+		}
+	}
+	SPD_ERROR("Before Reverse Len:{} half {}", k, (k - 1) / 2);
+	SPD_ERROR(ret);
+	char pt;
+	for (int j = 0; j < (k-1) / 2; j++)
+	{
+		pt = ret[j];
+		ret[j] = ret[k - j - 2];
+		ret[k - j - 2] = pt;
+	}
+	SPD_ERROR("After Reverse");
+	SPD_ERROR(ret);
+	return ret;
+}
+
+void reverse_lpchar(char*  lpchar) {
+	char* pchar = lpchar;
+	int len = strlen(pchar);
+	if (len <= 0)
+		return;
+	char pt;
+	for (int j = 0; j < (len - 1) / 2; j++)
+	{
+		pt = pchar[j];
+		pchar[j] = pchar[len - j - 2];
+		pchar[len - j - 2] = pt;
+	}
+}
+
 int main(int argc, char* argv[], char** env)
 {
+	init_log();
+	SPD_TRACE(_pgmptr);
+	SPD_CRITICAL("----------");
+	SPD_WARN(_pgmptr);
+	SPD_CRITICAL("----------");
+	SPD_INFO(_pgmptr);
+	SPD_CRITICAL("----------");
+	SPD_ERROR(LZ4_versionNumber());
+	SPD_CRITICAL("----------");
+	SPD_CRITICAL(_pgmptr);
+	SPD_CRITICAL("----------");
+	SPD_CRITICAL(get_app_name());
+
+	char* hh = "hello my world!";
+	SPD_CRITICAL(hh);
+	reverse_lpchar(hh);
+	SPD_CRITICAL(hh);
 	printf("EXE:: %s \n", _pgmptr);
 	printf("PATH:: %s \n", _pgmptr);
 	printf("lz4 num:\t%d\n", LZ4_versionNumber());
@@ -44,8 +151,10 @@ int main(int argc, char* argv[], char** env)
 	zip_file(infile, NULL);*/
 	char chs[100];
 	gets_s(chs);
+	shutdown_log();
 	return 0;
 }
+
 
 bool zip_file(char* infile, char* outfile)
 {
@@ -74,7 +183,7 @@ bool zip_file(char* infile, char* outfile)
 	{
 		fgets(buff, sizeof(buff) - 1, pfile);
 		printf("\t%s\n", buff);
-		LZ4_compress_default(buff, dst, sizeof(buff)-1, dstsize);
+		LZ4_compress_default(buff, dst, sizeof(buff) - 1, dstsize);
 		fputs(dst, ofile);
 	}
 	printf("*********************\n");
