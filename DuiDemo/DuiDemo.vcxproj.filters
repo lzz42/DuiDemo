@@ -60,6 +60,9 @@
     <ClInclude Include="common.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\lz4c\ilog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DuiDemo.cpp">
@@ -96,6 +99,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lz4c\ilog.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

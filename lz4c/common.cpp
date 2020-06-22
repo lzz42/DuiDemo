@@ -1,42 +1,66 @@
+#ifdef __AFXSTR_H__
+
+#include "stdafx.h"
+
+#endif // __AFXSTR_H__
+
+#pragma warning(disable:4996)
+
+#ifndef _SCL_SECURE_NO_WARNINGS
+#define _SCL_SECURE_NO_WARNINGS
+#endif
+
+
+#ifndef _CRT_NONSTDC_NO_DEPRECATE
+#define _CRT_NONSTDC_NO_DEPRECATE
+#endif
+
+#include "common.h"
 #include <direct.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <WinBase.h>
-#include <Windows.h>
-#include <winerror.h>
-#include <winreg.h>
-#include <tchar.h>
 #include <stringapiset.h>
 #include <vector>
 #include <map>
-#include "common.h"
-#include <cstdio>
-//#include "zlibunzip.h"
+#include <conio.h>
 
 using std::vector;
 using std::map;
 
+namespace common {
+
 #pragma region env info
 
-#ifdef _DEBUG    
-
-#define DP0(fmt) {TCHAR sOut[256];_stprintf_s(sOut,_T(fmt));OutputDebugString(sOut);}    
-#define DP1(fmt,var) {TCHAR sOut[256];_stprintf_s(sOut,_T(fmt),var);OutputDebugString(sOut);}    
-#define DP2(fmt,var1,var2) {TCHAR sOut[256];_stprintf_s(sOut,_T(fmt),var1,var2);OutputDebugString(sOut);}    
-#define DP3(fmt,var1,var2,var3) {TCHAR sOut[256];_stprintf_s(sOut,_T(fmt),var1,var2,var3);OutputDebugString(sOut);}    
-
-#endif    
-
-#ifndef _DEBUG    
-
-#define DP0(fmt) ;    
-#define DP1(fmt, var) ;    
-#define DP2(fmt,var1,var2) ;    
-#define DP3(fmt,var1,var2,var3) ;    
-
-#endif    
-
+char* get_app_name() {
+	char* name = _pgmptr;
+	int len = strlen(name);
+	char* ret = new char[len];
+	int k = 0;
+	for (int j = len - 1; j > 0; j--)
+	{
+		if (name[j] == '\\') {
+			ret[len - j - 1] = '\0';
+			k++;
+			break;
+		}
+		else if (name[j] == '\0') {
+			continue;
+		}
+		else {
+			ret[len - j - 1] = name[j];
+			k++;
+		}
+	}
+	char pt;
+	for (int j = 0; j < (k - 1) / 2; j++)
+	{
+		pt = ret[j];
+		ret[j] = ret[k - j - 2];
+		ret[k - j - 2] = pt;
+	}
+	return ret;
+}
 
 /// <summary>
 /// 获取当前进程执行文件的全路径
@@ -56,6 +80,16 @@ char* get_app_dir() {
 	return buf1;
 }
 
+#ifdef __AFXSTR_H__
+CString get_app_dir_cstring() {
+	return CString(get_app_dir());
+}
+
+CString get_app_path_cstring() {
+	return CString(get_app_path());
+}
+#endif //__AFXSTR_H__
+
 #pragma endregion
 
 #pragma region type convert
@@ -74,31 +108,30 @@ char* to_pchar(LPCTSTR lpstr) {
 	return pchar;
 }
 
-char* to_lpchar(TCHAR* lptchar) {
-	return to_pchar(lptchar);
+LPCWSTR to_lpcwstr(const char* chars) {
+	WCHAR wszClassName[1024];
+	memset(wszClassName, 0, sizeof(wszClassName));
+	MultiByteToWideChar(CP_ACP, 0, chars, strlen(chars) + 1, wszClassName,
+	sizeof(wszClassName) / sizeof(wszClassName[0]));
+	return wszClassName;
 }
 
-char* to_lpchar(TCHAR* lptchar, int len) {
-	TCHAR* tempT = (TCHAR*)malloc(sizeof(TCHAR) * len);
-	for (size_t i = 0; i < len; i++)
-	{
-		tempT[i] = lptchar[i];
-	}
-	char* temp = to_lpchar(tempT);
-	return temp;
-}
+#define C2W to_lpcwstr
 
 #pragma endregion
 
 #pragma region ini file program
+
+#ifdef __AFXSTR_H__
+
 
 /// <summary>
 /// 读取指定ini文件的所有区域
 /// </summary>
 /// <param name="inifilepath"></param>
 /// <returns></returns>
-vector<char*> ini_read_sections(LPCTSTR inifilepath) {
-	vector<char*> vRet;
+vector<CString> ini_read_sections(LPCTSTR inifilepath) {
+	vector<CString> vRet;
 	TCHAR buf[2048] = { 0 };
 	long nSize = sizeof(buf) / sizeof(buf[0]);
 	GetPrivateProfileSectionNames(buf, nSize, inifilepath);
@@ -110,19 +143,13 @@ vector<char*> ini_read_sections(LPCTSTR inifilepath) {
 		{
 			++q;
 		}
-		TCHAR* tempT = (TCHAR*)malloc(sizeof(TCHAR) * (q - p));
-		for (size_t i = 0; i < q-p; i++)
-		{
-			tempT[i] = p[i];
-		}
-		char* temp = to_lpchar(tempT);
-		vRet.push_back(temp);
+		CString str(p, q - p);
+		vRet.push_back(str);
 		p = q + 1;
 		q = q + 1;
 	}
 	return vRet;
 }
-
 
 /// <summary>
 /// 读取指定ini文件指定区域的所有key-value值
@@ -130,8 +157,8 @@ vector<char*> ini_read_sections(LPCTSTR inifilepath) {
 /// <param name="section"></param>
 /// <param name="inifilepath"></param>
 /// <returns></returns>
-map<char*, char*> ini_read_keys_values(LPCTSTR section, LPCTSTR inifilepath) {
-	map<char*, char*> mapRet;
+map<CString, CString> ini_read_keys_values(LPCTSTR section, LPCTSTR inifilepath) {
+	map<CString, CString> mapRet;
 	TCHAR buf[2048] = { 0 };
 	long nSize = sizeof(buf) / sizeof(buf[0]);
 	GetPrivateProfileSection(section, buf, nSize, inifilepath);
@@ -139,17 +166,17 @@ map<char*, char*> ini_read_keys_values(LPCTSTR section, LPCTSTR inifilepath) {
 	TCHAR* q = buf;
 	while (*p)
 	{
-		char* strKey, *strValue;
+		CString strKey, strValue;
 		while (*q)
 		{
 			if (_T('=') == *q)
 			{
-				strKey = to_lpchar(p, q - p);
+				strKey = CString(p, q - p);
 				p = q + 1;
 			}
 			++q;
 		}
-		strValue = to_lpchar(p, q - p);
+		strValue = CString(p, q - p);
 		mapRet.insert(std::make_pair(strKey, strValue));
 		p = q + 1;
 		q = q + 1;
@@ -157,11 +184,33 @@ map<char*, char*> ini_read_keys_values(LPCTSTR section, LPCTSTR inifilepath) {
 	return mapRet;
 }
 
-char* ini_read_value_cstring(LPCTSTR key, LPCTSTR section, LPCTSTR inifile) {
-	TCHAR* str = (TCHAR*)malloc(sizeof(TCHAR) * MAX_PATH);
-	GetPrivateProfileString(section, key, _T(""), str, MAX_PATH, inifile);
-	return to_lpchar(str);
+CString ini_read_value_cstring(LPCTSTR key, LPCTSTR section, LPCTSTR inifile) {
+	CString str;
+	GetPrivateProfileString(section, key, _T(""), str.GetBuffer(MAX_PATH), MAX_PATH, inifile);
+	return str;
 }
+
+CString ini_read_value_cstring(const char* key, const char* section, const char* ini) {
+	return ini_read_value_cstring(to_lpctstr(key), to_lpctstr(section), to_lpctstr(ini));
+}
+
+/// <summary>
+/// 读取ini文件中的内容 返回 cstring
+/// </summary>
+/// <param name="key">键名</param>
+/// <param name="default">默认值</param>
+/// <param name="section">区域</param>
+/// <param name="ini">ini文件</param>
+/// <returns></returns>
+CString ini_read_value_cstring(const char* key, const char* default, const char* section, const char* ini) {
+	CString res = ini_read_value_cstring(to_lpctstr(key), to_lpctstr(section), to_lpctstr(ini));
+	if (res.IsEmpty()) {
+		res = CString(default);
+	}
+	return res;
+}
+
+#endif // __AFXSTR_H__
 
 int ini_read_value_int(LPCTSTR key, LPCTSTR section, LPCTSTR inifile) {
 	return GetPrivateProfileInt(section, key, 0, inifile);
@@ -180,7 +229,7 @@ bool ini_delete(LPCTSTR section, LPCTSTR inifile, bool bdeletesection) {
 		return	ini_write(section, NULL, inifile);
 	}
 	else {
-		return	ini_write(section, _T(""), inifile);
+		return	ini_write(section, TEXT(""), inifile);
 	}
 }
 
@@ -196,12 +245,9 @@ bool ini_delete(const char* section, const char* inifile, bool bdeletesection) {
 	return ini_delete(to_lpctstr(section), to_lpctstr(inifile), bdeletesection);
 }
 
-char* ini_read_value_cstring(const char* key, const char* section, const char* ini) {
-	return ini_read_value_cstring(to_lpctstr(key), to_lpctstr(section), to_lpctstr(ini));
-}
 
 /// <summary>
-/// 读取ini文件中的内容 返回 char*
+/// 读取ini文件中的内容 返回 cstring
 /// </summary>
 /// <param name="key">键名</param>
 /// <param name="section">区域</param>
@@ -211,21 +257,7 @@ int ini_read_value_int(const char* key, const char* section, const char* ini) {
 	return ini_read_value_int(to_lpctstr(key), to_lpctstr(section), to_lpctstr(ini));
 }
 
-/// <summary>
-/// 读取ini文件中的内容 返回 char*
-/// </summary>
-/// <param name="key">键名</param>
-/// <param name="default">默认值</param>
-/// <param name="section">区域</param>
-/// <param name="ini">ini文件</param>
-/// <returns></returns>
-char* ini_read_value_cstring(const char* key, const char* default, const char* section, const char* ini) {
-	char* res = ini_read_value_cstring(to_lpctstr(key), to_lpctstr(section), to_lpctstr(ini));
-	if (res == NULL) {
-		strcpy(res, default);
-	}
-	return res;
-}
+
 #pragma endregion
 
 #pragma region coding convert
@@ -325,50 +357,76 @@ char* unicode_to_utf8(const wchar_t* in, int insize)
 #pragma endregion
 
 #pragma region zip unzip
-//
-///// <summary>
-///// 解压文件到指定文件夹
-///// </summary>
-///// <param name="srcfile"></param>
-///// <param name="dstpath"></param>
-///// <returns></returns>
-//bool c_unzip(CString srcfile, CString dstpath) {
-//	CString src = CString(srcfile);
-//	CString dst = CString(dstpath);
-//	//打开压缩文件夹创建hzip
-//	HZIP hz = OpenZipU((void*)(LPTSTR)(LPCTSTR)src, 0, ZIP_FILENAME);
-//	if (hz == NULL) {
-//		//打开压缩文件失败
-//		return false;
-//	}
-//	ZIPENTRYW ze;
-//	GetZipItem(hz, -1, &ze);
-//	int numitems = ze.index;
-//	for (int zi = 0; zi < numitems; zi++)
-//	{
-//		ZIPENTRYW ze;
-//		GetZipItem(hz, zi, &ze);
-//		CString zeName;
-//		zeName.Format(_T("%s"), ze.name);
-//		//处理zename不为null的文件与文件夹
-//		if (ze.name != NULL) {
-//			//zename以/结束的为文件夹 判断后做创建处理
-//			if (zeName.Right(1) == "/") {
-//				SHCreateDirectoryEx(NULL, dst + L"\\" + zeName.Left(zeName.GetLength() - 1), NULL);
-//			}
-//			//文件处理 将路径中的/变成右斜杠
-//			else {
-//				zeName.Replace(_T("/"), _T("\\"));
-//				SHCreateDirectoryEx(NULL, dst + L"\\" + zeName.Left(zeName.ReverseFind('\\')), NULL);
-//				ZRESULT a = UnzipItem(hz, zi, (void*)(LPTSTR)(LPCTSTR)(dst + L"\\" + zeName), 0, ZIP_FILENAME);
-//				SetFileAttributes((dst + L"\\" + zeName), FILE_ATTRIBUTE_NORMAL);
-//			}
-//		}
-//	}
-//	//关闭压缩文件
-//	CloseZip(hz);
-//	return true;
-//}
+
+#ifdef __AFXSTR_H__
+
+#include "zlibunzip.h"
+
+/// <summary>
+/// 解压文件到指定文件夹
+/// </summary>
+/// <param name="srcfile"></param>
+/// <param name="dstpath"></param>
+/// <returns></returns>
+bool c_unzip(CString srcfile, CString dstpath) {
+	CString src = CString(srcfile);
+	CString dst = CString(dstpath);
+	//打开压缩文件夹创建hzip
+	HZIP hz = OpenZipU((void*)(LPTSTR)(LPCTSTR)src, 0, ZIP_FILENAME);
+	if (hz == NULL) {
+		//打开压缩文件失败
+		return false;
+	}
+	ZIPENTRYW ze;
+	GetZipItem(hz, -1, &ze);
+	int numitems = ze.index;
+	for (int zi = 0; zi < numitems; zi++)
+	{
+		ZIPENTRYW ze;
+		GetZipItem(hz, zi, &ze);
+		CString zeName;
+		zeName.Format(_T("%s"), ze.name);
+		//处理zename不为null的文件与文件夹
+		if (ze.name != NULL) {
+			//zename以/结束的为文件夹 判断后做创建处理
+			if (zeName.Right(1) == "/") {
+				SHCreateDirectoryEx(NULL, dst + L"\\" + zeName.Left(zeName.GetLength() - 1), NULL);
+			}
+			//文件处理 将路径中的/变成右斜杠
+			else {
+				zeName.Replace(_T("/"), _T("\\"));
+				SHCreateDirectoryEx(NULL, dst + L"\\" + zeName.Left(zeName.ReverseFind('\\')), NULL);
+				ZRESULT a = UnzipItem(hz, zi, (void*)(LPTSTR)(LPCTSTR)(dst + L"\\" + zeName), 0, ZIP_FILENAME);
+				SetFileAttributes((dst + L"\\" + zeName), FILE_ATTRIBUTE_NORMAL);
+			}
+		}
+	}
+	//关闭压缩文件
+	CloseZip(hz);
+	return true;
+}
+
+#endif // __AFXSTR_H__
+
+#pragma endregion
+
+#pragma region system info
+
+int get_system_bits()
+{
+	SYSTEM_INFO si;
+	GetSystemInfo(&si);
+	if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64 ||
+		si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_IA64)
+	{
+		return 64;
+	}
+	return 32;
+}
+
+bool is_x64_system() {
+	return get_system_bits() == 64;
+}
 
 #pragma endregion
 
@@ -377,23 +435,7 @@ char* unicode_to_utf8(const wchar_t* in, int insize)
 https://docs.microsoft.com/zh-cn/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed
 */
 
-#define NET_V4 "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4" //存在与否 判断是否安装 4.0+版本
-#define NET_V45_PLUS_FULL "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\FULL" //存在与否  判断是否安装 4.5+版本
-//#define NET_V4_VERSION "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\FULL\\version" // 获取 net 版本号 string
-
-//#define NET_V45_PLUS_RELEASE "SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\FULL\release" //存在与否  判断是否安装 4.5+版本 int值判断具体版本
-//#define NET_V4_INSTALLPATH "SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\FULL\InstallPath" //获取安装路径
-
-#define NET_V450_RELEASE 378389
-#define NET_V451_RELEASE 378675
-#define NET_V452_RELEASE 379893
-#define NET_V460_RELEASE 393295
-#define NET_V461_RELEASE 394254
-#define NET_V462_RELEASE 394802
-#define NET_V470_RELEASE 460798
-#define NET_V471_RELEASE 461308
-#define NET_V472_RELEASE 461808
-#define NET_V480_RELEASE 528040
+static NET_FRAMEWROK_VERSION net_version;
 
 static map<int, char*> net_versions = {
 	{NET_V450_RELEASE,"4.5"},
@@ -408,32 +450,167 @@ static map<int, char*> net_versions = {
 	{NET_V480_RELEASE,"4.8"},
 };
 
-struct NET_FRAMEWROK_VERSION
-{
-	bool Is_V4;
-	bool Is_V45;
-	int Release;
-	char* Version;
-	char* InstallPath;
-};
+char* to_lpchar(TCHAR* pcData, int len) {
+	char* lpstr = new char[len + 1];
+	int j = 0;
+	for (int i = 0; i < len; i++)
+	{
+		lpstr[i] = pcData[i];
+		j++;
+	}
+	lpstr[j] = '\0';
+	return lpstr;
+}
 
-static NET_FRAMEWROK_VERSION net_version;
+bool reg_read_string(HKEY hk, const char* key, char* value) {
+	bool ret = false;
+	TCHAR lpData[512];
+	DWORD lpType = REG_SZ;
+	DWORD lpcbData = sizeof(lpData);
+	int vret = RegQueryValueEx(hk, C2W(key), 0, &lpType, (BYTE*)lpData, &lpcbData);
+	if (vret == ERROR_SUCCESS) {
+		if (lpType == REG_SZ) {
+			*value = *to_lpchar(lpData, lpcbData);
+			ret = true;
+		}
+	}
+	std::free(lpData);
+	return ret;
+}
 
-void get_net_framework_version() {
-	DP0("get_net_framework_version TEST");
-	printf("XXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+bool reg_read_int(HKEY hk, const char* key, int* value) {
+	bool ret = false;
+	TCHAR lpData[8];
+	DWORD lpType = REG_DWORD;
+	DWORD lpcbData = sizeof(lpData);
+	int vret = RegQueryValueEx(hk, C2W(key), 0, &lpType, (BYTE*)lpData, &lpcbData);
+	if (vret == ERROR_SUCCESS) {
+		if (lpType == REG_DWORD && lpcbData >= 4) {
+			int retv = lpData[0] & 0xFF;
+			retv |= ((lpData[1] << 8) & 0xFF00);
+			retv |= ((lpData[2] << 16) & 0xFF0000);
+			retv |= ((lpData[3] << 24) & 0xFF000000);
+			*value = retv;
+			ret = true;
+		}
+	}
+	std::free(lpData);
+	return ret;
+}
+
+void get_net_framework_info(NET_FRAMEWROK_VERSION* pver) {
+	try
+	{
+		HKEY hkv4full;
+		int vret = 0;
+		REGSAM flag = KEY_WOW64_32KEY;
+		if (is_x64_system()) {
+			flag = KEY_WOW64_64KEY;
+		};
+		vret = RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(NET_V45_PLUS_FULL), 0, flag | KEY_READ, &hkv4full);
+		if (vret != ERROR_SUCCESS) {
+			pver->Is_V4 = false;
+			return;
+		}
+		pver->Is_V4 = true;
+		char* pdata = new char[200];
+		if (reg_read_string(hkv4full, "InstallPath", pdata)) {
+			strcpy(pver->InstallPath, pdata);
+		}
+		char* ppdata = new char[50];
+		if (reg_read_string(hkv4full, "Version", ppdata)) {
+			strcpy(pver->VersionExact, ppdata);
+		}
+		if (reg_read_int(hkv4full, "Release", &pver->Release)) {
+			pver->Is_V45 = true;
+			if (pver->Release < NET_V450_RELEASE) {
+				strcpy(pver->Version, "4.5-");
+			}
+			else if (pver->Release > NET_V480_RELEASE) {
+				strcpy(pver->Version, "4.8+");
+			}
+			else {
+				std::map<int, char*>::iterator iter;
+				iter = net_versions.find(pver->Release);
+				if (iter != net_versions.end()) {
+					strcpy(pver->Version, iter->second);
+				}
+			}
+		}
+		std::free(pdata);
+		std::free(ppdata);
+		::RegCloseKey(hkv4full);
+	}
+	catch (const std::exception& ex)
+	{
+	}
+}
+void get_net_framework_versionex() {
 	NET_FRAMEWROK_VERSION* pver = (NET_FRAMEWROK_VERSION*)malloc(sizeof(NET_FRAMEWROK_VERSION));
 	try
 	{
 		HKEY hkv4full;
-		int vret = RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(NET_V45_PLUS_FULL), 0, KEY_WOW64_64KEY | KEY_ALL_ACCESS, &hkv4full);
+		int vret = 0;
+		REGSAM flag = KEY_WOW64_32KEY;
+		if (is_x64_system()) {
+			flag = KEY_WOW64_64KEY;
+		};
+		vret = RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(NET_V45_PLUS_FULL), 0, flag | KEY_READ, &hkv4full);
 		if (vret != ERROR_SUCCESS) {
-			DP0("打开v4\\Full 失败,Exit Code:" + toascii(vret));
-			printf("打开v4\\Full 失败,Exit Code:\t %d \n", vret);
 			pver->Is_V4 = false;
 			return;
 		}
-		DP0("打开v4\\Full 成功,Exit Code:" + toascii(vret));
+		pver->Is_V4 = true;
+		char* pdata =new char[200];
+		if (reg_read_string(hkv4full, "InstallPath", pdata)) {
+			strcpy(pver->InstallPath, pdata);
+		}
+		char* ppdata = new char[50];
+		if (reg_read_string(hkv4full, "Version", ppdata)) {
+			strcpy(pver->VersionExact, ppdata);
+		}
+		if (reg_read_int(hkv4full, "Release", &pver->Release)) {
+			pver->Is_V45 = true;
+			if (pver->Release < NET_V450_RELEASE) {
+				strcpy(pver->Version, "4.5-");
+			}
+			else if (pver->Release > NET_V480_RELEASE) {
+				strcpy(pver->Version, "4.8+");
+			}
+			else {
+				std::map<int, char*>::iterator iter;
+				iter = net_versions.find(pver->Release);
+				if (iter != net_versions.end()) {
+					strcpy(pver->Version, iter->second);
+				}
+			}
+		}
+		std::free(pdata);
+		std::free(ppdata);
+		::RegCloseKey(hkv4full);
+		net_version = *pver;
+	}
+	catch (const std::exception& ex)
+	{
+	}
+}
+
+
+void get_net_framework_version() {
+	NET_FRAMEWROK_VERSION* pver = (NET_FRAMEWROK_VERSION*)malloc(sizeof(NET_FRAMEWROK_VERSION));
+	try
+	{
+		HKEY hkv4full;
+		int vret = 0;
+		REGSAM flag = KEY_WOW64_32KEY;
+		if (is_x64_system()) {
+			flag = KEY_WOW64_64KEY;
+		};
+		vret = RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(NET_V45_PLUS_FULL), 0, flag | KEY_READ, &hkv4full);
+		if (vret != ERROR_SUCCESS) {
+			pver->Is_V4 = false;
+			return;
+		}
 		pver->Is_V4 = true;
 		DWORD lpType = REG_DWORD;
 		DWORD lpcbData = 256;
@@ -442,28 +619,27 @@ void get_net_framework_version() {
 		vret = RegQueryValueEx(hkv4full, TEXT("release"), 0, &lpType, lpData, &lpcbData);
 		if (vret != ERROR_SUCCESS) {
 			pver->Is_V45 = false;
-			DP0("打开v4\\Full\\Release 失败,Exit Code:" + toascii(vret));
-			printf("打开v4\\Full\\Release 失败,Exit Code:\t %d \n", vret);
 		}
 		else {
-			DP0("打开v4\\Full\\Release 成功,Exit Code:" + toascii(vret));
 			pver->Is_V45 = true;
 			if (lpType == REG_DWORD && lpcbData >= 4) {
-				pver->Release = lpData[0] & 0xFF;
-				pver->Release |= ((lpData[1] << 8) & 0xFF00);
-				pver->Release |= ((lpData[2] << 16) & 0xFF0000);
-				pver->Release |= ((lpData[3] << 24) & 0xFF000000);
+				int ret = 0;
+				ret = lpData[0] & 0xFF;
+				ret |= ((lpData[1] << 8) & 0xFF00);
+				ret |= ((lpData[2] << 16) & 0xFF0000);
+				ret |= ((lpData[3] << 24) & 0xFF000000);
+				pver->Release = ret;
 				if (pver->Release < NET_V450_RELEASE) {
-					pver->Version = "4.5-";
+					strcpy((char*)pver->Version, "4.5-");
 				}
 				else if (pver->Release > NET_V480_RELEASE) {
-					pver->Version = "4.8+";
+					strcpy((char*)pver->Version, "4.8+");
 				}
 				else {
 					std::map<int, char*>::iterator iter;
 					iter = net_versions.find(pver->Release);
 					if (iter != net_versions.end()) {
-						strcpy(pver->Version, iter->second);
+						strcpy((char*)pver->Version, iter->second);
 					}
 				}
 			}
@@ -472,16 +648,21 @@ void get_net_framework_version() {
 			}
 		}
 		//读取 InstallPath 项值
-		char* pcData = (char*)malloc(sizeof(char) * 1024 * 2);
+		TCHAR pcData[1024] = { 0 };
 		lpType = REG_SZ;
-		lpcbData = 1024 * 2;
-		vret = RegQueryValueEx(hkv4full, TEXT("release"), 0, &lpType, (LPBYTE)pcData, &lpcbData);
+		lpcbData = sizeof(pcData);
+		vret = RegQueryValueEx(hkv4full, TEXT("InstallPath"), 0, &lpType, (BYTE*)pcData, &lpcbData);
 		if (vret == ERROR_SUCCESS) {
 			if (lpType == REG_SZ) {
-				pcData[lpcbData] = '\0';
-				char* pstr = new char[sizeof(BYTE) * lpcbData];
-				strcpy(pstr, pcData);
-				pver->InstallPath = pstr;
+				char* pstr = to_lpchar(pcData, lpcbData);
+				strcpy((char*)pver->InstallPath, pstr);
+			}
+		}
+		vret = RegQueryValueEx(hkv4full, TEXT("Version"), 0, &lpType, (BYTE*)pcData, &lpcbData);
+		if (vret == ERROR_SUCCESS) {
+			if (lpType == REG_SZ) {
+				char* pstr = to_lpchar(pcData, lpcbData);
+				strcpy((char*)pver->VersionExact, pstr);
 			}
 		}
 		std::free(pcData);
@@ -490,36 +671,29 @@ void get_net_framework_version() {
 	}
 	catch (const std::exception& ex)
 	{
-		DP0("exception");
-		//DP0(ex.what());
 	}
-	//DP0(pver->Version);
-	//DP0(pver->InstallPath);
-	//DP0(pver->Is_V4 ? "V4 True" : "V4 False");
-	//DP0(pver->Is_V45 ? "V45 True" : "V45 False");
-	DP0("get_net_framework_version exit");
 }
 
 bool installed_net_4() {
-	return false;
-}
-
-char* get_installee_net_4_version() {
-	return false;
+	return net_version.Is_V4;
 }
 
 bool installed_net_45() {
-	return false;
+	return net_version.Is_V45;
 }
 
+char* get_installed_netframework4_plus_version() {
+	char ret[50];
+	strcpy(ret, net_version.VersionExact);
+	return ret;
+}
 
-//char* get_installed_net_45_version() {
-//
-//}
-//
-//
-//int get_installed_net_45_release() {
-//
-//}
+char* get_installed_path_netframework() {
+	char ret[200];
+	strcpy(ret, net_version.InstallPath);
+	return ret;
+}
 
 #pragma endregion
+
+}
