@@ -33,12 +33,12 @@ bool c_unzip(CString srcfile, CString dstpath);
 #pragma region register
 
 #include <winreg.h>
-#define NET_V4 "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4" //´æÔÚÓë·ñ ÅĞ¶ÏÊÇ·ñ°²×° 4.0+°æ±¾
-#define NET_V45_PLUS_FULL "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\FULL" //´æÔÚÓë·ñ  ÅĞ¶ÏÊÇ·ñ°²×° 4.5+°æ±¾
-//#define NET_V4_VERSION "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\FULL\\version" // »ñÈ¡ net °æ±¾ºÅ string
+#define NET_V4 "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4" //å­˜åœ¨ä¸å¦ åˆ¤æ–­æ˜¯å¦å®‰è£… 4.0+ç‰ˆæœ¬
+#define NET_V45_PLUS_FULL "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\FULL" //å­˜åœ¨ä¸å¦  åˆ¤æ–­æ˜¯å¦å®‰è£… 4.5+ç‰ˆæœ¬
+//#define NET_V4_VERSION "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\FULL\\version" // è·å– net ç‰ˆæœ¬å· string
 
-//#define NET_V45_PLUS_RELEASE "SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\FULL\release" //´æÔÚÓë·ñ  ÅĞ¶ÏÊÇ·ñ°²×° 4.5+°æ±¾ intÖµÅĞ¶Ï¾ßÌå°æ±¾
-//#define NET_V4_INSTALLPATH "SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\FULL\InstallPath" //»ñÈ¡°²×°Â·¾¶
+//#define NET_V45_PLUS_RELEASE "SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\FULL\release" //å­˜åœ¨ä¸å¦  åˆ¤æ–­æ˜¯å¦å®‰è£… 4.5+ç‰ˆæœ¬ intå€¼åˆ¤æ–­å…·ä½“ç‰ˆæœ¬
+//#define NET_V4_INSTALLPATH "SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\FULL\InstallPath" //è·å–å®‰è£…è·¯å¾„
 
 #define NET_V450_RELEASE 378389
 #define NET_V451_RELEASE 378675

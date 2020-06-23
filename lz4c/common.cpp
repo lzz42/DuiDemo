@@ -63,7 +63,7 @@ char* get_app_name() {
 }
 
 /// <summary>
-/// »ñÈ¡µ±Ç°½ø³ÌÖ´ĞĞÎÄ¼şµÄÈ«Â·¾¶
+/// è·å–å½“å‰è¿›ç¨‹æ‰§è¡Œæ–‡ä»¶çš„å…¨è·¯å¾„
 /// </summary>
 /// <returns></returns>
 char* get_app_path() {
@@ -71,7 +71,7 @@ char* get_app_path() {
 }
 
 /// <summary>
-/// »ñÈ¡µ±Ç°½ø³ÌÖ´ĞĞÎÄ¼şËùÔÚÄ¿Â¼
+/// è·å–å½“å‰è¿›ç¨‹æ‰§è¡Œæ–‡ä»¶æ‰€åœ¨ç›®å½•
 /// </summary>
 /// <returns></returns>
 char* get_app_dir() {
@@ -126,7 +126,7 @@ LPCWSTR to_lpcwstr(const char* chars) {
 
 
 /// <summary>
-/// ¶ÁÈ¡Ö¸¶¨iniÎÄ¼şµÄËùÓĞÇøÓò
+/// è¯»å–æŒ‡å®šiniæ–‡ä»¶çš„æ‰€æœ‰åŒºåŸŸ
 /// </summary>
 /// <param name="inifilepath"></param>
 /// <returns></returns>
@@ -137,7 +137,7 @@ vector<CString> ini_read_sections(LPCTSTR inifilepath) {
 	GetPrivateProfileSectionNames(buf, nSize, inifilepath);
 	TCHAR* p, * q;
 	p = q = buf;
-	while (*p)//¼´ '\0' != *p
+	while (*p)//å³ '\0' != *p
 	{
 		while (*q)
 		{
@@ -152,7 +152,7 @@ vector<CString> ini_read_sections(LPCTSTR inifilepath) {
 }
 
 /// <summary>
-/// ¶ÁÈ¡Ö¸¶¨iniÎÄ¼şÖ¸¶¨ÇøÓòµÄËùÓĞkey-valueÖµ
+/// è¯»å–æŒ‡å®šiniæ–‡ä»¶æŒ‡å®šåŒºåŸŸçš„æ‰€æœ‰key-valueå€¼
 /// </summary>
 /// <param name="section"></param>
 /// <param name="inifilepath"></param>
@@ -195,12 +195,12 @@ CString ini_read_value_cstring(const char* key, const char* section, const char*
 }
 
 /// <summary>
-/// ¶ÁÈ¡iniÎÄ¼şÖĞµÄÄÚÈİ ·µ»Ø cstring
+/// è¯»å–iniæ–‡ä»¶ä¸­çš„å†…å®¹ è¿”å› cstring
 /// </summary>
-/// <param name="key">¼üÃû</param>
-/// <param name="default">Ä¬ÈÏÖµ</param>
-/// <param name="section">ÇøÓò</param>
-/// <param name="ini">iniÎÄ¼ş</param>
+/// <param name="key">é”®å</param>
+/// <param name="default">é»˜è®¤å€¼</param>
+/// <param name="section">åŒºåŸŸ</param>
+/// <param name="ini">iniæ–‡ä»¶</param>
 /// <returns></returns>
 CString ini_read_value_cstring(const char* key, const char* default, const char* section, const char* ini) {
 	CString res = ini_read_value_cstring(to_lpctstr(key), to_lpctstr(section), to_lpctstr(ini));
@@ -247,11 +247,11 @@ bool ini_delete(const char* section, const char* inifile, bool bdeletesection) {
 
 
 /// <summary>
-/// ¶ÁÈ¡iniÎÄ¼şÖĞµÄÄÚÈİ ·µ»Ø cstring
+/// è¯»å–iniæ–‡ä»¶ä¸­çš„å†…å®¹ è¿”å› cstring
 /// </summary>
-/// <param name="key">¼üÃû</param>
-/// <param name="section">ÇøÓò</param>
-/// <param name="ini">iniÎÄ¼ş</param>
+/// <param name="key">é”®å</param>
+/// <param name="section">åŒºåŸŸ</param>
+/// <param name="ini">iniæ–‡ä»¶</param>
 /// <returns></returns>
 int ini_read_value_int(const char* key, const char* section, const char* ini) {
 	return ini_read_value_int(to_lpctstr(key), to_lpctstr(section), to_lpctstr(ini));
@@ -277,14 +277,14 @@ char* unicode_to_gb2312(TCHAR * pchars) {
 }
 
 char* unicode_to_ascii(TCHAR * pchars) {
-	int nLen = WideCharToMultiByte(CP_ACP, 0, pchars, -1, NULL, 0, "", false);//Ëã³öºÏÊÊµÄ³¤¶È
+	int nLen = WideCharToMultiByte(CP_ACP, 0, pchars, -1, NULL, 0, "", false);//ç®—å‡ºåˆé€‚çš„é•¿åº¦
 	char* pchar = new char[nLen];
-	WideCharToMultiByte(CP_ACP, 0, pchars, -1, pchar, nLen, "", false);//UNICODE×ªASCII
+	WideCharToMultiByte(CP_ACP, 0, pchars, -1, pchar, nLen, "", false);//UNICODEè½¬ASCII
 	return pchar;
 }
 
 /// <summary>
-/// unicode ×ª ascii
+/// unicode è½¬ ascii
 /// </summary>
 /// <param name="szStr"></param>
 /// <returns></returns>
@@ -300,7 +300,7 @@ char* unicode_to_Ansii(const wchar_t* szStr) {
 }
 
 /// <summary>
-/// unicode ×ª utf-8
+/// unicode è½¬ utf-8
 /// </summary>
 /// <param name="in"></param>
 /// <param name="insize"></param>
@@ -363,7 +363,7 @@ char* unicode_to_utf8(const wchar_t* in, int insize)
 #include "zlibunzip.h"
 
 /// <summary>
-/// ½âÑ¹ÎÄ¼şµ½Ö¸¶¨ÎÄ¼ş¼Ğ
+/// è§£å‹æ–‡ä»¶åˆ°æŒ‡å®šæ–‡ä»¶å¤¹
 /// </summary>
 /// <param name="srcfile"></param>
 /// <param name="dstpath"></param>
@@ -371,10 +371,10 @@ char* unicode_to_utf8(const wchar_t* in, int insize)
 bool c_unzip(CString srcfile, CString dstpath) {
 	CString src = CString(srcfile);
 	CString dst = CString(dstpath);
-	//´ò¿ªÑ¹ËõÎÄ¼ş¼Ğ´´½¨hzip
+	//æ‰“å¼€å‹ç¼©æ–‡ä»¶å¤¹åˆ›å»ºhzip
 	HZIP hz = OpenZipU((void*)(LPTSTR)(LPCTSTR)src, 0, ZIP_FILENAME);
 	if (hz == NULL) {
-		//´ò¿ªÑ¹ËõÎÄ¼şÊ§°Ü
+		//æ‰“å¼€å‹ç¼©æ–‡ä»¶å¤±è´¥
 		return false;
 	}
 	ZIPENTRYW ze;
@@ -386,13 +386,13 @@ bool c_unzip(CString srcfile, CString dstpath) {
 		GetZipItem(hz, zi, &ze);
 		CString zeName;
 		zeName.Format(_T("%s"), ze.name);
-		//´¦Àízename²»ÎªnullµÄÎÄ¼şÓëÎÄ¼ş¼Ğ
+		//å¤„ç†zenameä¸ä¸ºnullçš„æ–‡ä»¶ä¸æ–‡ä»¶å¤¹
 		if (ze.name != NULL) {
-			//zenameÒÔ/½áÊøµÄÎªÎÄ¼ş¼Ğ ÅĞ¶Ïºó×ö´´½¨´¦Àí
+			//zenameä»¥/ç»“æŸçš„ä¸ºæ–‡ä»¶å¤¹ åˆ¤æ–­ååšåˆ›å»ºå¤„ç†
 			if (zeName.Right(1) == "/") {
 				SHCreateDirectoryEx(NULL, dst + L"\\" + zeName.Left(zeName.GetLength() - 1), NULL);
 			}
-			//ÎÄ¼ş´¦Àí ½«Â·¾¶ÖĞµÄ/±ä³ÉÓÒĞ±¸Ü
+			//æ–‡ä»¶å¤„ç† å°†è·¯å¾„ä¸­çš„/å˜æˆå³æ–œæ 
 			else {
 				zeName.Replace(_T("/"), _T("\\"));
 				SHCreateDirectoryEx(NULL, dst + L"\\" + zeName.Left(zeName.ReverseFind('\\')), NULL);
@@ -401,7 +401,7 @@ bool c_unzip(CString srcfile, CString dstpath) {
 			}
 		}
 	}
-	//¹Ø±ÕÑ¹ËõÎÄ¼ş
+	//å…³é—­å‹ç¼©æ–‡ä»¶
 	CloseZip(hz);
 	return true;
 }
@@ -615,7 +615,7 @@ void get_net_framework_version() {
 		DWORD lpType = REG_DWORD;
 		DWORD lpcbData = 256;
 		LPBYTE lpData = new BYTE[4];
-		//¶ÁÈ¡ release ÏîÖµ
+		//è¯»å– release é¡¹å€¼
 		vret = RegQueryValueEx(hkv4full, TEXT("release"), 0, &lpType, lpData, &lpcbData);
 		if (vret != ERROR_SUCCESS) {
 			pver->Is_V45 = false;
@@ -647,7 +647,7 @@ void get_net_framework_version() {
 				pver->Release = 0;
 			}
 		}
-		//¶ÁÈ¡ InstallPath ÏîÖµ
+		//è¯»å– InstallPath é¡¹å€¼
 		TCHAR pcData[1024] = { 0 };
 		lpType = REG_SZ;
 		lpcbData = sizeof(pcData);

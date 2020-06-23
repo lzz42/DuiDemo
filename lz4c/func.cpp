@@ -31,7 +31,7 @@ namespace func {
 	}
 
 	/// <summary>
-	/// ¾ßÓĞÄ¬ÈÏÖµµÄ²ÎÊı º¯Êı
+	/// å…·æœ‰é»˜è®¤å€¼çš„å‚æ•° å‡½æ•°
 	/// </summary>
 	/// <param name="a"></param>
 	/// <param name="b"></param>
@@ -48,7 +48,7 @@ namespace func {
 	}
 
 	/// <summary>
-	/// const ¡¢º¯Êı²ÎÊı ¡¢Ö¸Õë int
+	/// const ã€å‡½æ•°å‚æ•° ã€æŒ‡é’ˆ int
 	/// </summary>
 	/// <param name="a"></param>
 	/// <param name="ca"></param>
@@ -58,21 +58,21 @@ namespace func {
 	void func_int(int a, const int ca, int* pa, const int* pca, int* const ppca) {
 		a = 100;
 
-		//ca = 300; //Ö»¶Á²ÎÊı ²»ÄÜÖ±½ÓĞŞ¸Ä
-		int* pb = (int*)&ca; //Ö»¶Á²ÎÊı ¿ÉÒÔÍ¨¹ıÖ¸ÕëĞŞ¸Ä
+		//ca = 300; //åªè¯»å‚æ•° ä¸èƒ½ç›´æ¥ä¿®æ”¹
+		int* pb = (int*)&ca; //åªè¯»å‚æ•° å¯ä»¥é€šè¿‡æŒ‡é’ˆä¿®æ”¹
 		*pb = 201;
 
 		*pa = 300;
 
-		//*pca = 400; //Ö»¶Á²ÎÊı²»ÄÜÖ±½ÓĞŞ¸Ä
-		int* pd = (int*)pca;//Ö»¶Á²ÎÊı ¿ÉÒÔÍ¨¹ıÖ¸ÕëĞŞ¸Ä
+		//*pca = 400; //åªè¯»å‚æ•°ä¸èƒ½ç›´æ¥ä¿®æ”¹
+		int* pd = (int*)pca;//åªè¯»å‚æ•° å¯ä»¥é€šè¿‡æŒ‡é’ˆä¿®æ”¹
 		*pd = 401;
 
 		*ppca = 500;
 	}
 
 	/// <summary>
-	/// const ¡¢º¯Êı²ÎÊı ¡¢Ö¸Õë char
+	/// const ã€å‡½æ•°å‚æ•° ã€æŒ‡é’ˆ char
 	/// </summary>
 	/// <param name="a"></param>
 	/// <param name="ca"></param>
