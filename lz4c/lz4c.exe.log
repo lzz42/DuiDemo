@@ -1,0 +1,15 @@
+[2020-06-23 13:26:45 940409] [PID 18396] [TID 24336] [info] Init logger
+[2020-06-23 13:26:46 325550] [PID 18396] [TID 24336] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-23 13:28:10 376259] [PID 5116] [TID 29932] [info] Init logger
+[2020-06-23 13:28:10 830547] [PID 5116] [TID 29932] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-23 13:28:13 887303] [PID 5116] [TID 29932] [critical] ----------
+[2020-06-23 13:28:13 887529] [PID 5116] [TID 29932] [warning] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-23 13:28:13 887599] [PID 5116] [TID 29932] [critical] ----------
+[2020-06-23 13:28:13 887710] [PID 5116] [TID 29932] [info] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-23 13:28:13 887783] [PID 5116] [TID 29932] [critical] ----------
+[2020-06-23 13:28:13 888626] [PID 5116] [TID 29932] [error] 10902
+[2020-06-23 13:28:13 888742] [PID 5116] [TID 29932] [critical] ----------
+[2020-06-23 13:28:13 888830] [PID 5116] [TID 29932] [critical] D:\zhanglizhong\Git\NewRepo\DuiDemo\bin\Win32_Debug\lz4c.exe
+[2020-06-23 13:28:13 888916] [PID 5116] [TID 29932] [critical] ----------
+[2020-06-23 13:28:13 889001] [PID 5116] [TID 29932] [critical] hello my world!
+[2020-06-23 13:28:13 889092] [PID 5116] [TID 29932] [critical] !dlrow ym olleh

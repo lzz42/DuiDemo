@@ -74,21 +74,38 @@ namespace ilog {
 		return ret;
 	}
 
-	void init_log() {
+
+	void init_log(char* dir, char* file) {
 		spdlog::cfg::load_env_levels();
 		spdlog::set_level(spdlog::level::info);
 		spdlog::flush_every(std::chrono::seconds(3));
 		spdlog::set_pattern("[%Y-%m-%d %H:%M:%S %f] [PID %P] [TID %t] [%^%l%$] %v");
 		spdlog::enable_backtrace(100);
 
-		char* app = get_app_name();
-		strcat(app, ".log");
+		char* app;
+		char* logfile;
+		if (file == NULL) {
+			logfile = get_app_name();
+			strcat(logfile, ".log");
+		}
+		else {
+			logfile = (char*)malloc(sizeof(char) * 256);
+			strcpy(logfile, file);
+		}
+		if (dir != NULL) {
+			app = (char*)malloc(sizeof(char) * 256);
+			strcpy(app, dir);
+			strcat(app, logfile);
+			free(logfile);
+		}
+		else {
+			app = logfile;
+		}
 		auto basic_logger = spdlog::basic_logger_mt("basic_logger", app);
 		basic_logger->flush_on(spdlog::level::err);
 		spdlog::set_default_logger(basic_logger);
 
 		SPD_INFO("Init logger");
-		SPD_INFO(_pgmptr);
 		free(app);
 	}
 

@@ -7,24 +7,9 @@
 #include "lz4.h"
 //#include "common.h"
 #include "ilog.h"
+#include "func.h"
 
 bool zip_file(char* infile, char* outfile);
-
-#pragma region str ex
-
-#include <assert.h>
-#include <malloc.h>
-
-int strlen_ex(const char* str) {
-	assert(str != NULL);
-	int len = 0;
-	while (*str++)
-		++len;
-	return len;
-}
-
-#pragma endregion
-
 
 void printf_cmd()
 {
@@ -45,9 +30,30 @@ char* reverse_pchar(char* lpchar) {
 	return pchar;
 }
 
-int main(int argc, char* argv[], char** env)
-{
-	ilog::init_log();
+int env_test(int argc, char* argv[], char** env) {
+	if (argc == 0 || argv == NULL)
+	{
+		printf_cmd();
+		return 0;
+	}
+	else
+	{
+		for (size_t i = 0; i < argc; i++)
+		{
+			printf("\t %s \n", argv[i]);
+		}
+		/*int j = 0;
+		while (env[j] != NULL)
+		{
+			printf("\t %s \n", env[j]);
+			j++;
+		}*/
+	}
+	return 0;
+}
+
+int log_test(int argc, char* argv[], char** env) {
+	ilog::init_log("D:\\Temp\\", "0087.log");
 	SPD_TRACE(_pgmptr);
 	SPD_CRITICAL("----------");
 	SPD_WARN(_pgmptr);
@@ -71,28 +77,6 @@ int main(int argc, char* argv[], char** env)
 		printf("PATH:: %s \n", _pgmptr);
 		printf("lz4 num:\t%d\n", LZ4_versionNumber());
 		printf("lz4 str:\t%s\n", LZ4_versionString());
-		if (argc == 0 || argv == NULL)
-		{
-			printf_cmd();
-			return 0;
-		}
-		else
-		{
-			for (size_t i = 0; i < argc; i++)
-			{
-				printf("\t %s \n", argv[i]);
-			}
-			/*int j = 0;
-			while (env[j] != NULL)
-			{
-				printf("\t %s \n", env[j]);
-				j++;
-			}*/
-		}
-		/*char* infile = "D:\\WIFI2.txt";
-		zip_file(infile, NULL);*/
-		char chs[100];
-		gets_s(chs);
 	}
 	catch (const std::exception& ex)
 	{
@@ -100,6 +84,18 @@ int main(int argc, char* argv[], char** env)
 	}
 	ilog::shutdown_log();
 	return 0;
+}
+
+int func_test(int argc, char* argv[], char** env) {
+	func::func_main();
+	return 0;
+}
+
+int main(int argc, char* argv[], char** env)
+{
+	//return env_test(argc, argv, env);
+	//return log_test(argc, argv, env);
+	return func_test(argc, argv, env);
 }
 
 

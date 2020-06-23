@@ -11,6 +11,6 @@
 #define SPD_CRITICAL spdlog::critical
 
 namespace ilog {
-	void init_log();
+	void init_log(char* dir = NULL, char* file = NULL);
 	void shutdown_log();
 }
