@@ -6,9 +6,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\Downloads\zlib1211 (1)\zlib-1.2.11\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\minigzip.c">
       <Filter>Source Files</Filter>
     </ClCompile>

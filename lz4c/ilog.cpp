@@ -44,7 +44,7 @@ namespace ilog {
 			name = to_pchar(path);
 		}
 		if (name == NULL) {
-			name = "IIHSetup.exe";
+			name = "DuiDemo.exe";
 		}
 		int len = strlen(name);
 		char* ret = new char[len];

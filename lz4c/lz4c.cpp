@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "lz4.h"
+#include "..\lz4-1.9.2\lz4.h"
 //#include "common.h"
 #include "ilog.h"
 #include "func.h"
@@ -97,7 +97,6 @@ int main(int argc, char* argv[], char** env)
 	//return log_test(argc, argv, env);
 	return func_test(argc, argv, env);
 }
-
 
 bool zip_file(char* infile, char* outfile)
 {
